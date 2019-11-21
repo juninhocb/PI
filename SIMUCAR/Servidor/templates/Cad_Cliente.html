@@ -1,0 +1,160 @@
+<!DOCTYPE html> 
+  <html> 
+   <head> 
+   <meta charset="UTF-8">
+   <title> Cadastro Cliente </title> 
+   <link rel="stylesheet" type="text/css" href="static/style.css" />
+   <link rel="stylesheet" type="text/css" href="static/style1.css" />	
+	<style>
+     		body{
+                         margin: 0;
+			 
+                         	 
+         
+ 			}
+         #menu ul{ 
+              margin: 225; 
+              background-color: "Black";
+              list-style: none; 
+         } 
+         #menu ul li{
+              display: inline;
+   
+         }
+         #menu ul li a{ 
+              padding: 10px 10px;
+              display: inline-block; 
+              color: white; 
+              text-decoration: none; 
+         }
+	 #menu ul li a:hover{
+		color: #004d00; 
+               
+         }
+       
+	</style>
+	
+<style>
+     		body{
+                       background: url("static/fundo.jpg");
+                       background-repeat: no-repeat;
+                       background-attachment: fixed; 
+  		       background-size: cover;	
+}
+         
+       
+	</style>
+	
+	
+
+   <!head> 
+   
+   
+ 
+
+
+<body>
+
+<h2 align = "center"> <font size="8" color="9C9C9C" style = "font-family:courier,arial,helvetica;"> Cadastro de Cliente</font></h2>
+
+<form method="post"  action="/incluirUsuario">
+<fieldset>
+	
+	<fieldset class="grupo">
+		<div class="campo">
+			<label for="nome">Nome</label>
+			<input type="text" id="nome" name="nome" style="width: 20em" value="" required><span class="aviso"></span>
+		</div>
+		<div class="campo">
+			<label for="snome">Sobrenome</label>
+			<input type="text" id="snome" name="snome" style="width: 20em" value="">
+		</div>
+	</fieldset>	
+	
+	<div class="campo">
+		<label>Sexo</label>
+		<label class="checkbox">
+			<input type="radio" id="sexo" name="sexo" value="masculino"> <font color="#666">Masculino </font>
+		</label>
+		<label class="checkbox">
+			<input type="radio" id="sexo" name="sexo" value="feminino"> <font color="#666">Feminino </font>
+		</label>
+	</div>
+
+	<div class="campo">
+		<label for="email">E-mail</label>
+		<input type="text" id="email" name="email" style="width: 41em" value="">
+	</div>
+
+	<div class="campo">
+		<label for="telefone">Telefone</label>
+		<input type="text" id="telefone" name="telefone" style="width: 20em" value="">
+	</div>
+	
+	<fieldset class="grupo">
+		<div class="campo">
+			<label for="cidade">Cidade</label>
+			<input type="text" id="cidade" name="cidade" style="width: 20em" value="">
+		</div>
+		<div class="campo">
+			<label for="estado">Estado</label>
+			<select name="estado" id="estado">
+				<option value="">--</option>
+				<option value="AC">AC</option>
+				<option value="AL">AL</option>
+				<option value="AM">AM</option>
+				<option value="BA">BA</option>
+				<option value="CE">CE</option>
+				<option value="DF">DF</option>
+				<option value="ES">ES</option>
+				<option value="GO">GO</option>
+				<option value="MA">MA</option>
+				<option value="MT">MT</option>
+				<option value="MS">MS</option>
+				<option value="MG">MG</option>
+				<option value="PA">PA</option>
+				<option value="PB">PB</option>
+				<option value="PR">PR</option>
+				<option value="PE">PE</option>
+				<option value="PI">PI</option>
+				<option value="RR">RR</option>
+				<option value="RO">RO</option>
+				<option value="RJ">RJ</option>
+				<option value="RN">RN</option>
+				<option value="RS">RS</option>
+				<option value="SC">SC</option>
+				<option value="SP">SP</option>
+				<option value="SE">SE</option>
+				<option value="TO">TO</option>
+			</select>
+		</div>
+	</fieldset>
+
+	<div class="campo">
+		<label for="mensagem">Mensagem</label>
+		<textarea rows="6" style="width: 41em" id="mensagem" name="mensagem"></textarea>
+	</div>
+
+	<form>
+	<input type=submit value=Incluir onClick="alert('CLIENTE CADASTRADO COM SUCESSO'); return true" class="botao submit" name="submit">
+   	</form>
+	
+</fieldset>
+</form>
+
+
+
+</body></html>
+
+<div id="menu" style= "text-align: center;"> 
+<font size="3" color="White" face="Verdana"> 
+     
+	
+	<a href = "/Cliente"> Voltar 
+     
+  
+    <font/>
+  </div>
+</body>  
+
+  </html>

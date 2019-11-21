@@ -1,0 +1,154 @@
+<!DOCTYPE> 
+  <html> 
+   <head> 
+   <meta charset="UTF-8">
+   <title> Cadastro Veiculo </title> 
+   <link rel="stylesheet" type="text/css" href="static/style.css" />
+   <link rel="stylesheet" type="text/css" href="static/style1.css" />	
+	<style>
+     		body{
+                         margin: 0;
+			 
+                         	 
+         
+ 			}
+         #menu ul{ 
+              margin: 225; 
+              background-color: "Black";
+              list-style: none; 
+         } 
+         #menu ul li{
+              display: inline;
+   
+         }
+         #menu ul li a{ 
+              padding: 10px 10px;
+              display: inline-block; 
+              color: white; 
+              text-decoration: none; 
+         }
+	 #menu ul li a:hover{
+		color: #004d00; 
+               
+         }
+       
+	</style>
+	
+	<style>
+     		body{
+                       background: url("static/fundo.jpg");
+                       background-repeat: no-repeat;
+                       background-attachment: fixed; 
+  		       background-size: cover;	
+}
+         
+       
+	</style> 
+	
+
+   <!head> 
+   
+   
+ 
+
+
+<body>
+
+<h2 align = "center"> <font size="8" color="9C9C9C" style = "font-family:courier,arial,helvetica;"> Cadastro de Veiculos</font></h2>
+
+<form action="/incluirVeiculo" method="post">
+<fieldset>
+	
+	<fieldset class="grupo">
+		<div class="campo">
+			<label for="marca">Marca</label>
+			<select name="marca">
+				<option value="">--</option>
+				<option value="Audi">Audi </option>
+				<option value="BMW"> BMW </option>	
+				<option value="Mercedes"> Mercedes  </option>
+				<option value="Toyota"> Toyota </option>
+			</select>
+		</div>
+		<div class="campo">
+			<label for="modelo">Modelo</label>
+			<select name="modelo">
+				<option value="">--</option>
+				<option value="Audi"> Audi A3 </option>
+				<option value="Audi"> Audi A4 </option>
+				<option value="BMW"> BMW  I8 </option>	
+				<option value="BMW"> BMW X1  </option>
+				<option value="Mercedes"> Mercedes Classe SLC </option>
+				<option value="Toyota"> Toyota Hilux </option>
+				<option value="Toyota"> Toyota SW4 </option>
+			</select>
+		</div>
+	</fieldset>	
+	
+	<div class="campo">
+		<label for="chassi">Numero do Chassi</label>
+		<input type="text" id="chassi" name="chassi" style="width: 41em" value="">
+	</div>
+
+	<div class="campo">
+		<label for="nome">Nome do Cliente </label>
+		<input type="text" id="nome" name="nome" style="width: 20em" value="">
+	</div>
+	
+	<fieldset class="grupo">
+		<div class="campo">
+			<label for="nmrPlaca">Numero da Placa </label>
+			<input type="text" id="nmrPlaca" name="nmrPlaca" style="width: 20em" value="">
+		</div>
+		<div class="campo">
+			<label for="ano"> Ano </label>
+			<select name="ano" id="Ano">
+				<option value="">--</option>
+				<option value="2005">2005</option>
+				<option value="PR">2006</option>
+				<option value="PR">2007</option>
+				<option value="PR">2008</option>
+				<option value="PR">2009</option>
+				<option value="PR">2010</option>
+				<option value="PR">2011</option>
+				<option value="PR">2012</option>
+				<option value="PR">2013</option>
+				<option value="PR">2014</option>
+				<option value="PR">2015</option>
+				<option value="PR">2016</option>
+				<option value="PR">2017</option>
+				<option value="PR">2018</option>
+				<option value="PR">2019</option>
+
+			</select>
+		</div>
+	</fieldset>
+
+	<div class="campo">
+		<label for="mensagem">Defeitos Apresentados</label>
+		<textarea rows="6" style="width: 41em" id="mensagem" name="mensagem"></textarea>
+	</div>
+
+	<form>
+	<input type="button" value="Enviar" onClick="alert('VEICULO CADASTRADO COM SUCESSO'); return true" class="botao submit" name="submit">
+   	</form>
+	
+</fieldset>
+</form>
+
+
+
+</body></html>
+
+<div id="menu" style= "text-align: center;"> 
+<font size="3" color="White" face="Verdana"> 
+     <ul> 
+	
+	<li> <a href = "/Veiculos"> Voltar </a><li>
+     </ul>
+  
+    <font/>
+  </div>
+</body>  
+
+  </html>
