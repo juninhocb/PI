@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session
 from usuario import Usuario
 from veiculo import Veiculo
 from peewee import *
+from SENSOR import *
 import os
 import requests
 from playhouse.shortcuts import dict_to_model

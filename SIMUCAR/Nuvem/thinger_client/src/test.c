@@ -5,12 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 
 // Alias do programa
 #define USER_ID             "juninhocb"
 #define DEVICE_ID           "Raspberry"
 #define DEVICE_CREDENTIAL   "Teste12345"
-#define BUFFSIZE 512
 
 // Declaração de estrutura de dados
 #pragma pack(1)
@@ -26,21 +26,22 @@ typedef struct payload_t {
 } payload;
 #pragma pack()
 
-// Declaração de Funções
-int createSocket(int port);
+// Declaração de Funções 
+int createSocket(int port); 
 void closeSocket(int sock);
 void sendMsg(int sock, void* msg, int msgsize);
-int envia_vel();
+void * thinger_io(void* cd);
+    
 
 // Função Main do Programa
 int main(int argc, char *argv[])
 {
-    // Conectando-se ao thinger
-    thinger_device thing(USER_ID, DEVICE_ID, DEVICE_CREDENTIAL);
-
+    // Conectando-se ao thinger	
+    thinger_device thing(USER_ID, DEVICE_ID, DEVICE_CREDENTIAL); 
+    
     // Instanciando as variáveis locais do Main
-    int PORT = 2300;
-    //int BUFFSIZE = 512;
+	int PORT = 2300;
+    int BUFFSIZE = 512;
     char buff[BUFFSIZE];
     int ssock, csock;
     int nread;
@@ -49,52 +50,46 @@ int main(int argc, char *argv[])
 
     // Chamar a função que criará o socket para utilização do mesmo para comunicação na porta 2300
     ssock = createSocket(PORT);
-    printf("Servidor está funcionando na porta: %d\n", PORT);
-    printf("oxi");
-
-
+    printf("Servidor está funcionando na porta: %d\n", PORT); 
+        
+    
     while (1){
 
         // Recebendo a conexão do clinete
-		csock = accept(ssock, (struct sockaddr *)&client, (socklen_t*)&clilen);
+		csock = accept(ssock, (struct sockaddr *)&client, &clilen);
         if (csock < 0)
-        	{
-            printf("Error: Conexão Fail\n");
-            continue;
-        	}
+            	{
+            	printf("Error: Conexão Fail\n");
+            	continue;
+            	}
 
-		printf("Conexão bem sucedida com %s\n", inet_ntoa(client.sin_addr));
+	printf("Conexão bem sucedida com %s\n", inet_ntoa(client.sin_addr));
         bzero(buff, BUFFSIZE); // Instancia o Buffer
 
-		// Enquanto houver mensagens do Cliente ao servidor.... ler as mensagens
-        while ((nread=read(csock, buff, BUFFSIZE)) > 0)
-        	{
-            printf("\nRecebido %d bytes\n", nread);
-  			payload *p = (payload*) buff;
+	pthread_create(&thr, NULL, thinger_io, NULL);
+        pthread_detach(thr);
 
+	// Enquanto houver mensagens do Cliente ao servidor.... ler as mensagens
+        	while ((nread=read(csock, buff, BUFFSIZE)) > 0)
+        	{
+            		printf("\nRecebido %d bytes\n", nread);
+  			payload *p = (payload*) buff;
+      
 		// Mostra os pacotes recebidos se houver (Efeito de teste)
 			printf("Contéudo recebido: rpm=%d, vel=%d, temp=%f, acel=%d, dist=%d, comb=%d, volt=%d, ambtemp=%d\n",
-        	p->rpm, p->vel, p->temp, p->acel, p->dist, p->comb, p->volt, p->ambtemp);
+        		p->rpm, p->vel, p->temp, p->acel, p->dist, p->comb, p->volt, p->ambtemp);
 
 			printf("Evnia os dados de volta.. ");  //...
-        	sendMsg(csock, p, sizeof(payload));
-
-        	thing["RPM"] >> [](pson& out){ out = envia_vel(); };  //codifica os dados no formato JSON
-            thing["Velocidade"] >> [](pson& out){ out = 3; };
-            thing["Temperatura"] >> [](pson& out){ out = 3; };
-            thing["Pos_pedal"] >> [](pson& out){ out = 3; };
-            thing["Distancia"] >> [](pson& out){ out = 3; };
-            //thing["DTC"] >> [](pson& out){ out = "String" };
-
-            thing.handle();  //Inicia a comunicação com a nuvem
+        	        sendMsg(csock, p, sizeof(payload));
     		}
-		}
+		
+		}	
 
-	// Fechará o Socket se necessário
+	// Fechará o Socket se necessário			
     closeSocket(ssock);
     printf("sair");
 	return 0;
-
+		
 }
 
 // Funções do Programa
@@ -109,7 +104,7 @@ int createSocket(int port)
         exit(1);
     }
     printf("Socket criado\n");
-
+    
     // Conectando e fazendo bind do server na estrutura de dados
     bzero((char *) &server, sizeof(server));
     server.sin_family = AF_INET;
@@ -145,7 +140,15 @@ void sendMsg(int sock, void* msg, int msgsize)
     return;
 }
 
-int envia_vel(){
-    payload *p;
-    return p->vel;
+void * thinger_io(){
+
+    while (1){
+
+        thing.handle();  //Inicia a comunicação com a nuvem
+        }
+
+
+    return NULL;
 }
+
+

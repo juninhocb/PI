@@ -2,10 +2,22 @@ import socket
 import sys
 import random
 from ctypes import *
-from SENSOR import *
+import time
+import obd
 import time
 
+
 def main():
+    #incia debug
+    obd.logger.setLevel(obd.logging.DEBUG)
+    #incia a conexão setando o baudrate correto
+    connection = obd.OBD(baudrate=10400, fast=False)
+    if connection:
+        print('conexão realizada com sucesso, o veículo possui 43 comandos disponíveis')
+    else:
+        print('conexão com falha')
+        
+    #instância de variáveis para o socket    
     server_addr = ('localhost', 2300)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if not (s):
@@ -19,28 +31,30 @@ def main():
         sys.exit(1)
     while(1):
         try:      
-            rpm = OBD_COMMAND_RPM()
-            vel = OBD_COMMAND_SPEED()
-            temp = OBD_COMMAND_COOLANT_TEMP()
-            acel = OBD_COMMAND_THROTTLE_POS()
-            dist = OBD_COMMAND_DISTANCE_W_MIL()
-            comb = OBD_COMMAND_FUEL_LEVEL()
-            tens = OBD_CONTROL_MODULE_VOLTAGE()
-            tempamb = OBD_CONTROL_AMBIANT_AIR_TEMP()
+            rpm = obd.commands.RPM
+            vel = obd.commands.SPEED
+            temp = obd.commands.COOLANT_TEMP
+            acel = obd.commands.THROTTLE_POS
+            dist = obd.commands.DISTANCE_W_MIL
+            #dtc = obd.commands.GET_DTC
+
+            rrpm = connection.query(rpm)
+            rvel = connection.query(vel)
+            rtemp = connection.query(temp)
+            racel = connection.query(acel)
+            rdist = connection.query(dist)
+            #rdtc = connection.query(dtc)
            
+            
             print ("")
-            dados_out = Dados(rpm.rpm, vel.vel, temp.temp, acel.acel,
-            dist.dist, comb.comb, tens.tens, tempamb.tempamb)
+            dados_out = Dados(rrpm, rvel, rtemp, racel, rdist)
             
 
-            print ("Sending rpm=%d, vel=%d, temp=%f, acel=%d, dist=%d, comb=%d, tens=%d, tempamb=%d" % (dados_out.rpm,
-                                                        dados_out.vel,
-                                                        dados_out.temp,
-                                                        dados_out.acel,
-                                                        dados_out.dist,
-                                                        dados_out.comb,
-                                                        dados_out.tens,
-                                                        dados_out.tempamb))
+            print ("Sending rpm=%d, vel=%d, temp=%f, acel=%d, dist=%d, comb=%d, tens=%d, tempamb=%d" % (dados_out.rrpm,
+                                                        dados_out.rvel,
+                                                        dados_out.rtemp,
+                                                        dados_out.racel,
+                                                        dados_out.rdist))
             nsent = s.send(dados_out)
             print ("Sent %d bytes" % nsent)
 

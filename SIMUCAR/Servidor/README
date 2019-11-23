@@ -9,5 +9,6 @@
 
 
 - Melhorar vizualização da tela "Diagnósticos"
-- Pegar informações da nuvem (fazer a nuvem funcionar antes)
+- Pegar informações da nuvem por JSON 
 - Substituir os valores da nuvem pelos valores estáticos do diagnóstico 
+- Fazer cálculos do Best Drive

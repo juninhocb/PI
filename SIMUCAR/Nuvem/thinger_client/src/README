@@ -1,6 +1,6 @@
-- Conexão com a nuvem implementada porém com coisas a corrigir
+- Conexão com a nuvem implementada 
+- Erros solucionados
+- Comunicação com o socket para a nuvem funcionando
 
 
-[1]Falta corrigir o erro de criação do Socket
-[2]Implementar os objetos no thinger (rpm,vel,temp...) 
-[3]Implementar as funções que irão jogar esses valores ao thinger
+[1]Implementar os valores que irão para as nuvens (o "out" de cada thing)
