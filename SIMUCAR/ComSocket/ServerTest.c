@@ -17,14 +17,14 @@ typedef struct payload_t {
 
 #pragma pack(1)
 typedef struct payload_t {
-    int rpm;
-    int vel;
+    float rpm;
+    float vel;
     float temp;
-    int acel;
-    int dist;
-    int comb;
-    int volt;
-    int ambtemp;
+    float acel;
+    float dist;
+    //int comb;
+    //int volt;
+    //int ambtemp;
 } payload;
 #pragma pack()
 
@@ -111,12 +111,10 @@ int main()
         {
             printf("\nRecebido %d bytes\n", nread);
             payload *p = (payload*) buff;
-            /*printf("Conteúdo recebido: rpm=%d, velocidade=%d, temp=%f\n",
-                    p->rpm, p->vel, p->temp, p->acel, p->dist, p->comb, p->);*/
 
 
-            printf("Contéudo recebido: rpm=%d, vel=%d, temp=%f, acel=%d, dist=%d, comb=%d, volt=%d, ambtemp=%d\n",
-            p->rpm, p->vel, p->temp, p->acel, p->dist, p->comb, p->volt, p->ambtemp);
+            printf("Contéudo recebido: rpm=%f, vel=%f, temp=%f, acel=%f, dist=%f\n",
+            p->rpm, p->vel, p->temp, p->acel, p->dist);
 
 
 

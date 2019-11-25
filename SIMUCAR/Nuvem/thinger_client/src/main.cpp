@@ -15,16 +15,18 @@
 // Declaração de estrutura de dados
 #pragma pack(1)
 typedef struct payload_t {
-    int rpm;
-    int vel;
+    float rpm;
+    float vel;
     float temp;
-    int acel;
-    int dist;
-    int comb;
-    int volt;
-    int ambtemp;
+    float acel;
+    float dist;
+    //int comb;
+    //int volt;
+    //int ambtemp;
 } payload;
 #pragma pack()
+char buff[BUFFSIZE];
+payload *p = (payload*) buff;
 
 // Declaração de Funções
 int createSocket(int port);
@@ -41,7 +43,6 @@ int main(int argc, char *argv[])
     // Instanciando as variáveis locais do Main
     int PORT = 2300;
     //int BUFFSIZE = 512;
-    char buff[BUFFSIZE];
     int ssock, csock;
     int nread;
     struct sockaddr_in client;
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
     // Chamar a função que criará o socket para utilização do mesmo para comunicação na porta 2300
     ssock = createSocket(PORT);
     printf("Servidor está funcionando na porta: %d\n", PORT);
-    printf("oxi");
+
 
 
     while (1){
@@ -70,16 +71,16 @@ int main(int argc, char *argv[])
         while ((nread=read(csock, buff, BUFFSIZE)) > 0)
         	{
             printf("\nRecebido %d bytes\n", nread);
-  			payload *p = (payload*) buff;
+
 
 		// Mostra os pacotes recebidos se houver (Efeito de teste)
 			printf("Contéudo recebido: rpm=%d, vel=%d, temp=%f, acel=%d, dist=%d, comb=%d, volt=%d, ambtemp=%d\n",
-        	p->rpm, p->vel, p->temp, p->acel, p->dist, p->comb, p->volt, p->ambtemp);
+        	p->rpm, p->vel, p->temp, p->acel, p->dist);
 
 			printf("Evnia os dados de volta.. ");  //...
         	sendMsg(csock, p, sizeof(payload));
 
-        	thing["RPM"] >> [](pson& out){ out = envia_vel(); };  //codifica os dados no formato JSON
+        	thing["RPM"] >> [](pson& out){ out = p->rpm; };  //codifica os dados no formato JSON
             thing["Velocidade"] >> [](pson& out){ out = 3; };
             thing["Temperatura"] >> [](pson& out){ out = 3; };
             thing["Pos_pedal"] >> [](pson& out){ out = 3; };

@@ -37,10 +37,7 @@ def main():
                                                         dados_out.vel,
                                                         dados_out.temp,
                                                         dados_out.acel,
-                                                        dados_out.dist,
-                                                        dados_out.comb,
-                                                        dados_out.tens,
-                                                        dados_out.tempamb))
+                                                        dados_out.dist))
             nsent = s.send(dados_out)
             print ("Sent %d bytes" % nsent)
 

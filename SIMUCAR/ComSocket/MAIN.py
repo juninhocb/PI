@@ -6,6 +6,15 @@ import time
 import obd
 import time
 
+class Dados(Structure):
+    _fields_ = [("rrpm", c_float),
+                ("rvel", c_float),
+                ("rtemp", c_float),
+                ("racel", c_float),
+                ("rdist", c_float)]
+
+   
+
 
 def main():
     #incia debug
@@ -45,18 +54,32 @@ def main():
             rdist = connection.query(dist)
             #rdtc = connection.query(dtc)
            
-            
+            if(rpm.value.magnitude):
+                x = rrpm.value.magnitude
+            else:
+                x = 0
+            #y = rvel.value
+            #w = rtemp.value
+            #z = racel.value
+            #u = rdist.value
             print ("")
-            dados_out = Dados(rrpm, rvel, rtemp, racel, rdist)
-            
+            #dados_out = Dados(rrpm.value.magnitude,rvel.value.magnitude,rtemp.value.magnitude
+             #                 ,racel.value.magnitude,rdist.value.magnitude)
+            dados_out = Dados(x, 1, 2, 3, 4)
 
-            print ("Sending rpm=%d, vel=%d, temp=%f, acel=%d, dist=%d, comb=%d, tens=%d, tempamb=%d" % (dados_out.rrpm,
-                                                        dados_out.rvel,
-                                                        dados_out.rtemp,
-                                                        dados_out.racel,
-                                                        dados_out.rdist))
+            #print ("Sending rrpm=%d, rvel=%d, rtemp=%f, racel=%d, rdist=%d" % (dados_out.rrpm,
+             #                                           dados_out.rvel,
+             #                                           dados_out.rtemp,
+             #                                           dados_out.racel,
+             #                                           dados_out.rdist))
+            
+            #nsent = s.send(b'rrpm')
+            #nsent = s.send(b'rvel')
+            #nsent = s.send(b'rtemp')
+            #nsent = s.send(b'racel')
+            #nsent = s.send(b'rdist')
             nsent = s.send(dados_out)
-            print ("Sent %d bytes" % nsent)
+            #print ("Sent %d bytes" % nsent)
 
             buff = s.recv(sizeof(dados_out))
             print(buff)
