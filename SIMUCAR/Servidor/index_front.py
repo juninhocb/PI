@@ -3,6 +3,7 @@ from usuario import Usuario
 from veiculo import Veiculo
 from peewee import *
 from SENSOR import *
+from Dados import *
 import os
 import requests
 from playhouse.shortcuts import dict_to_model
@@ -26,7 +27,8 @@ def Cliente():
     return render_template('Cliente.html', lista = usuarios)
 @app.route('/Veiculos')
 def Veiculos():
-    dados_veiculos = requests.get('http://localhost:4001/Veiculos')
+    
+    dados_veiculos = requests.get('link da nuvem')
     json_veiculos = dados_veiculos.json()
     veiculos = []
     
@@ -37,7 +39,29 @@ def Veiculos():
     return render_template('Veiculos.html', lista = veiculos)
 @app.route('/Diagnosticos')
 def Diagnostico():
-    return render_template('Diagnosticos.html')
+
+    # obter os dados da nuvem
+#    dados = requests.get('http://localhost:4001/Veiculos') #link Databucket
+
+    # incorporar os dados json em objetos python/peewee (dict to model)
+#    json_dados = dados.json()
+#    dados =[]
+    # passar os objetos para a página exibir
+#    for i in dados:
+#        d = dict_to_model(Dados, i)
+#        dados.append(d)
+
+    dados = [
+        Dados(rpm= 1250, vel= 108, temp= 60, acel = 32, dist= 15 ),
+        Dados(rpm= 250, vel= 18, temp= 60, acel = 32, dist= 10 ),
+        Dados(rpm= 10, vel= 8, temp= 60, acel = 32, dist= 5 ),
+        Dados(rpm= 1250, vel= 10, temp= 60, acel = 32, dist= 1 )
+    ]
+
+    primeiro = dados[0]
+    ultimo = dados[-1]
+
+    return render_template('Diagnosticos.html', dados = [primeiro,ultimo])
 @app.route('/Contato')
 def Contato():
     return render_template('Contato.html')

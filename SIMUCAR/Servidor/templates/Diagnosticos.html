@@ -2,6 +2,7 @@
   <html> 
    <head> 
    <meta charset="UTF-8">
+   <meta http-equiv="refresh" content="30">
    <title> Clientes </title> 
    <link rel="stylesheet" type="text/css" href="static/style.css" />
    
@@ -43,7 +44,18 @@
 }
          
        
-	</style> 
+    </style> 
+    
+    <style>
+    borda{
+            background-color: white;
+            text-align:center;
+            border: 10px solid;
+             border-color:red;
+}
+    
+
+    </style>
 	
 	
 
@@ -61,7 +73,7 @@
  
 <h2>
 <div align= "center">
-<font size ="5" color="FFFFFF" style = "font-family:courier,arial,helvetica;" >Dados de Veíuculo: XXXX</font>
+<font size ="5" color="FFFFFF" style = "font-family:courier,arial,helvetica;" >Dados de Veíuculo</font>
 </div>
 </h2>
 
@@ -69,84 +81,49 @@
 <body> 
 
 <div align = "center" >
+        <div style= "text-align: center;" >
+                <select >
+                   <option>Selecione o Veículo </option> 
+                   <option> Teste </a><br> </option>
+                           
+               </select>
+                       
+</div>
 
-<table border="1" width="80%" >
-    <caption><font size="4" color="FFFFFF" >Valores Atuais do Veículo </font></caption>
+<table  border="3" bordercolor="yellow"</table>>
     <tr>
-        <th><font size="2" color="FFFFFF">Rotações por Minuto (RPM)</font> </th>
-        <th><font size="2" color="FFFFFF">Velocidade (Km/H)</font></th>
+    <th><font size="2" color="FFFFFF">Tipo do Dado</font> </th>
+    <th><font size="2" color="FFFFFF">Rotações por Minuto (RPM)</font> </th>
+    <th><font size="2" color="FFFFFF">Velocidade (Km/H)</font></th>
 	<th><font size="2" color="FFFFFF">Temperatura (°C)</font></th>
 	<th><font size="2" color="FFFFFF">Posição da Tartaruga (%)</font></th>
-	<th><font size="2" color="FFFFFF">Distância Percorrida Total (KM)</font></th>
-	<th><font size="2" color="FFFFFF">Tanque Combústivel (%)</font></th>
-	<th><font size="2" color="FFFFFF">Tensão na Bateria (V)</font></th>
-	<th><font size="2" color="FFFFFF">Temperatura Ambiente (°C)</font></th>
-
+    <th><font size="2" color="FFFFFF">Distância Percorrida Total (KM)</font></th>
+    <th><font size="2" color="FFFFFF">Gasto Do Veículo (R$)</font></th>
     </tr>
+    {% for dado in dados %}
     <tr align="center">
-        <td><font color="FFFFFF">1900 RPM</font></td>
-        <td><font color="FFFFFF">47 KM/H</font></td>
-	<td><font color="FFFFFF">25 °C</font></td>
-	<td><font color="FFFFFF">30%</font></td>
-	<td><font color="FFFFFF">76 KM</font></td>
-	<td><font color="FFFFFF">78%</font></td>
-	<td><font color="FFFFFF">11.4 V</font></td>
-	<td><font color="FFFFFF">32 °C</font></td>
+        <td><font color="FFFFFF">Valores Atuais do Veículo</font></td>
+        <td><font color="FFFFFF">{{ dado.rpm }} </font></td>
+        <td><font color="FFFFFF">{{ dado.vel }} </font></td>
+	    <td><font color="FFFFFF">{{dado.temp }}</font></td>
+	    <td><font color="FFFFFF">{{ dado.acel }}</font></td>
+        <td><font color="FFFFFF">{{ dado.dist}}</font></td>
+        <td><font color="FFFFFF">{{ (dado.dist/11)*4 }}</font></td>
+    </tr>
+    {% endfor %}
+    <tr align="center">
+        <td><font color="FFFFFF">Best Drive</font></td>
+        <td><font color="FFFFFF">1900 </font></td>
+        <td><font color="FFFFFF"> 80 </font></td>
+        <td><font color="FFFFFF"> 65 </font></td>
+        <td><font color="FFFFFF">50</font></td>
+        <td><font color="FFFFFF">0</font></td>
     </tr>
    
-</table>
-
-<table border="1" width="80%" >
-    <caption><font size="4" color="FFFFFF" >Códigos de Erros do Veículo </font></caption>
-    <tr>
-        <th><font size="2" color="FFFFFF">Rotações por Minuto (RPM)</font> </th>
-        <th><font size="2" color="FFFFFF">Velocidade (Km/H)</font></th>
-	<th><font size="2" color="FFFFFF">Temperatura (°C)</font></th>
-	<th><font size="2" color="FFFFFF">Posição da Tartaruga (%)</font></th>
-	<th><font size="2" color="FFFFFF">Distância Percorrida Total (KM)</font></th>
-	<th><font size="2" color="FFFFFF">Tanque Combústivel (%)</font></th>
-	<th><font size="2" color="FFFFFF">Tensão na Bateria (V)</font></th>
-	<th><font size="2" color="FFFFFF">Temperatura Ambiente (°C)</font></th>
-
-    </tr>
-    <tr align="center">
-        <td><font color="FFFFFF">1900 RPM</font></td>
-        <td><font color="FFFFFF">47 KM/H</font></td>
-	<td><font color="FFFFFF">25 °C</font></td>
-	<td><font color="FFFFFF">30%</font></td>
-	<td><font color="FFFFFF">76 KM</font></td>
-	<td><font color="FFFFFF">78%</font></td>
-	<td><font color="FFFFFF">11.4 V</font></td>
-	<td><font color="FFFFFF">32 °C</font></td>
-    </tr>
    
-</table>
+</table>    
 
-<table border="1" width="80%" >
-    <caption><font size="4" color="FFFFFF" > Cálculos Best Drive </font></caption>
-    <tr>
-        <th><font size="2" color="FFFFFF">Rotações por Minuto (RPM)</font> </th>
-        <th><font size="2" color="FFFFFF">Velocidade (Km/H)</font></th>
-	<th><font size="2" color="FFFFFF">Temperatura (°C)</font></th>
-	<th><font size="2" color="FFFFFF">Posição da Tartaruga (%)</font></th>
-	<th><font size="2" color="FFFFFF">Distância Percorrida Total (KM)</font></th>
-	<th><font size="2" color="FFFFFF">Tanque Combústivel (%)</font></th>
-	<th><font size="2" color="FFFFFF">Tensão na Bateria (V)</font></th>
-	<th><font size="2" color="FFFFFF">Temperatura Ambiente (°C)</font></th>
 
-    </tr>
-    <tr align="center">
-        <td><font color="FFFFFF">1900 RPM</font></td>
-        <td><font color="FFFFFF">47 KM/H</font></td>
-	<td><font color="FFFFFF">25 °C</font></td>
-	<td><font color="FFFFFF">30%</font></td>
-	<td><font color="FFFFFF">76 KM</font></td>
-	<td><font color="FFFFFF">78%</font></td>
-	<td><font color="FFFFFF">11.4 V</font></td>
-	<td><font color="FFFFFF">32 °C</font></td>
-    </tr>
-   
-</table>
 
 <a href = "/"> Voltar </a>
 
