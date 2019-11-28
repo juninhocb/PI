@@ -1,6 +1,4 @@
 - Conexão com a nuvem implementada 
 - Erros solucionados
 - Comunicação com o socket para a nuvem funcionando
-
-
-[1]Implementar os valores que irão para as nuvens (o "out" de cada thing)
+- 'Things' do Thinger implementados

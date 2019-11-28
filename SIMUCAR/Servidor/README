@@ -8,7 +8,3 @@
 - Dinâmica do sistema e rotas funcionando 100% 
 
 
-- Melhorar vizualização da tela "Diagnósticos"
-- Pegar informações da nuvem por JSON 
-- Substituir os valores da nuvem pelos valores estáticos do diagnóstico 
-- Fazer cálculos do Best Drive
