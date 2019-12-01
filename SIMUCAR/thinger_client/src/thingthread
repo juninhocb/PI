@@ -5,34 +5,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 
 // Alias do programa
 #define USER_ID             "juninhocb"
 #define DEVICE_ID           "Raspberry"
 #define DEVICE_CREDENTIAL   "Teste12345"
-#define BUFFSIZE 512
+#define BUFFSZ 512
 
 // Declaração de estrutura de dados
 #pragma pack(1)
 typedef struct payload_t {
-    float rpm;
-    float vel;
+    int rpm;
+    int vel;
     float temp;
-    float acel;
-    float dist;
-    //int comb;
-    //int volt;
-    //int ambtemp;
+    int acel;
+    int dist;
+    int comb;
+    int volt;
+    int ambtemp;
 } payload;
 #pragma pack()
-char buff[BUFFSIZE];
-payload *p = (payload*) buff;
+
+struct client_data{
+    int sk;
+    int nread;
+    struct sockaddr_in *client_addr;
+};
 
 // Declaração de Funções
 int createSocket(int port);
 void closeSocket(int sock);
 void sendMsg(int sock, void* msg, int msgsize);
-int envia_vel();
+void * client_handle(void* cd);
 
 // Função Main do Programa
 int main(int argc, char *argv[])
@@ -42,57 +47,36 @@ int main(int argc, char *argv[])
 
     // Instanciando as variáveis locais do Main
     int PORT = 2300;
-    //int BUFFSIZE = 512;
-    int ssock, csock;
-    int nread;
+    int ssock;
     struct sockaddr_in client;
     int clilen = sizeof(client);
+    pthread_t thr;
+    struct client_data *cd;
 
     // Chamar a função que criará o socket para utilização do mesmo para comunicação na porta 2300
     ssock = createSocket(PORT);
     printf("Servidor está funcionando na porta: %d\n", PORT);
 
 
-
     while (1){
 
-        // Recebendo a conexão do clinete
-		csock = accept(ssock, (struct sockaddr *)&client, (socklen_t*)&clilen);
-        if (csock < 0)
-        	{
-            printf("Error: Conexão Fail\n");
-            continue;
-        	}
+        cd = (struct client_data *)malloc(sizeof(struct client_data));
+        cd->client_addr = (struct sockaddr_in*)malloc(sizeof(struct sockaddr_in));
+        clilen = sizeof(struct sockaddr_in);
 
-		printf("Conexão bem sucedida com %s\n", inet_ntoa(client.sin_addr));
-        bzero(buff, BUFFSIZE); // Instancia o Buffer
-
-		// Enquanto houver mensagens do Cliente ao servidor.... ler as mensagens
-        while ((nread=read(csock, buff, BUFFSIZE)) > 0)
-        	{
-            printf("\nRecebido %d bytes\n", nread);
+	/* Aguarda a conexão */	
+        cd->sk = accept(ssock, (struct sockaddr*)cd->client_addr, (socklen_t*)&clilen); 
 
 
-		// Mostra os pacotes recebidos se houver (Efeito de teste)
-			printf("Contéudo recebido: rpm=%d, vel=%d, temp=%f, acel=%d, dist=%d, comb=%d, volt=%d, ambtemp=%d\n",
-        	p->rpm, p->vel, p->temp, p->acel, p->dist);
 
-			printf("Evnia os dados de volta.. ");  //...
-        	sendMsg(csock, p, sizeof(payload));
+        pthread_create(&thr, NULL, client_handle, (void *)cd);
+        pthread_detach(thr); //vai executar em paralelo e quando terminar vai excluir os dados dela
 
-        	thing["RPM"] >> [](pson& out){ out = p->rpm; };  //codifica os dados no formato JSON
-            thing["Velocidade"] >> [](pson& out){ out = 3; };
-            thing["Temperatura"] >> [](pson& out){ out = 3; };
-            thing["Pos_pedal"] >> [](pson& out){ out = 3; };
-            thing["Distancia"] >> [](pson& out){ out = 3; };
-            //thing["DTC"] >> [](pson& out){ out = "String" };
-
-            thing.handle();  //Inicia a comunicação com a nuvem
-    		}
+      
 		}
 
 	// Fechará o Socket se necessário
-    closeSocket(ssock);
+	closeSocket(ssock);
     printf("sair");
 	return 0;
 
@@ -146,7 +130,31 @@ void sendMsg(int sock, void* msg, int msgsize)
     return;
 }
 
-int envia_vel(){
-    payload *p;
-    return p->vel;
+void * client_handle(void* cd){
+    struct client_data *client = (struct client_data *)cd;
+    char buff[BUFFSZ];
+    time_t ticks;
+    int nread; 
+     
+
+        
+    printf("Conexão bem sucedida com %s\n", inet_ntoa(client->client_addr->sin_addr));
+        bzero(buff, BUFFSZ); // Instancia o Buffer
+    while(1){
+		// Enquanto houver mensagens do Cliente ao servidor.... ler as mensagens
+    while ((client->nread=read(client->sk, buff, BUFFSZ)) > 0)
+        	{
+            printf("\nRecebido %d bytes\n", nread);
+  		payload *p = (payload*) buff;
+
+		// Mostra os pacotes recebidos se houver (Efeito de teste)
+		printf("Contéudo recebido: rpm=%d, vel=%d, temp=%f, acel=%d, dist=%d, comb=%d, volt=%d, ambtemp=%d\n",
+        	p->rpm, p->vel, p->temp, p->acel, p->dist, p->comb, p->volt, p->ambtemp);
+
+		printf("Evnia os dados de volta.. ");  //...
+        	sendMsg(client->sk, p, sizeof(payload));
+    		}
+      }
+    
+    return NULL;
 }

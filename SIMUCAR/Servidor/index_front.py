@@ -28,34 +28,33 @@ def Cliente():
 @app.route('/Veiculos')
 def Veiculos():
     
-    dados_veiculos = requests.get('link da nuvem')
-    json_veiculos = dados_veiculos.json()
-    veiculos = []
+    #dados_veiculos = requests.get('link da nuvem')
+    #json_veiculos = dados_veiculos.json()
+    #veiculos = []
     
-    for veiculos_json in json_veiculos:
-        v = dict_to_model(Veiculo, veiculos_json)
-        veiculos.append(v)
+    #for veiculos_json in json_veiculos:
+    #    v = dict_to_model(Veiculo, veiculos_json)
+    #    veiculos.append(v)
     
-    return render_template('Veiculos.html', lista = veiculos)
+    return render_template('Veiculos.html')
 @app.route('/Diagnosticos')
 def Diagnostico():
-
+    
     # obter os dados da nuvem
-#    dados = requests.get('http://localhost:4001/Veiculos') #link Databucket
+    dados = requests.get('http://thinger.io.bucket.s3-eu-west-1.amazonaws.com/20191130T233255.juninhocb.DadosRPM.K0gud7yC.json') 
 
     # incorporar os dados json em objetos python/peewee (dict to model)
-#    json_dados = dados.json()
-#    dados =[]
+    json_dados = dados.json()
+    dados =[]
     # passar os objetos para a página exibir
-#    for i in dados:
-#        d = dict_to_model(Dados, i)
-#        dados.append(d)
-
+    #for i in dados:
+    #    d = dict_to_model(Dados, i)
+    #    dados.append(d)
     dados = [
-        Dados(rpm= 1250, vel= 108, temp= 60, acel = 32, dist= 15 ),
-        Dados(rpm= 250, vel= 18, temp= 60, acel = 32, dist= 10 ),
-        Dados(rpm= 10, vel= 8, temp= 60, acel = 32, dist= 5 ),
-        Dados(rpm= 1250, vel= 10, temp= 60, acel = 32, dist= 1 )
+        Dados(rpm= json_dados[0]['val'], vel= 108, temp= 60, acel = 32, dist= 15 ),
+        Dados(rpm= json_dados[1]['val'], vel= 18, temp= 60, acel = 32, dist= 10 ),
+        Dados(rpm= json_dados[2]['val'], vel= 8, temp= 60, acel = 32, dist= 5 ),
+        Dados(rpm= json_dados[-1]['val'], vel= 10, temp= 60, acel = 32, dist= 1 )
     ]
 
     primeiro = dados[0]

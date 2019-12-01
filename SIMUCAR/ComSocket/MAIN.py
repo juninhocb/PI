@@ -38,54 +38,46 @@ def main():
     except:
         print ("ERROR: Conexao para %s recusada" % repr(server_addr))
         sys.exit(1)
-    while(1):
-        try:      
-            rpm = obd.commands.RPM
-            vel = obd.commands.SPEED
-            temp = obd.commands.COOLANT_TEMP
-            acel = obd.commands.THROTTLE_POS
-            dist = obd.commands.DISTANCE_W_MIL
+    while(1):   
+        rpm = obd.commands.RPM
+        vel = obd.commands.SPEED
+        temp = obd.commands.COOLANT_TEMP
+        acel = obd.commands.THROTTLE_POS
+        dist = obd.commands.DISTANCE_W_MIL
             #dtc = obd.commands.GET_DTC
 
-            rrpm = connection.query(rpm)
-            rvel = connection.query(vel)
-            rtemp = connection.query(temp)
-            racel = connection.query(acel)
-            rdist = connection.query(dist)
+        rrpm = connection.query(rpm)
+        rvel = connection.query(vel)
+        rtemp = connection.query(temp)
+        racel = connection.query(acel)
+        rdist = connection.query(dist)
             #rdtc = connection.query(dtc)
            
-            if(rpm.value.magnitude):
-                x = rrpm.value.magnitude
-            else:
-                x = 0
-            #y = rvel.value
-            #w = rtemp.value
-            #z = racel.value
-            #u = rdist.value
+        try: 
+            
+            x = rrpm.value.magnitude 
+            y = rvel.value.magnitude
+            w = rtemp.value.magnitude
+            z = racel.value.magnitude
+            u = rdist.value.magnitude
             print ("")
             #dados_out = Dados(rrpm.value.magnitude,rvel.value.magnitude,rtemp.value.magnitude
              #                 ,racel.value.magnitude,rdist.value.magnitude)
-            dados_out = Dados(x, 1, 2, 3, 4)
-
-            #print ("Sending rrpm=%d, rvel=%d, rtemp=%f, racel=%d, rdist=%d" % (dados_out.rrpm,
-             #                                           dados_out.rvel,
-             #                                           dados_out.rtemp,
-             #                                           dados_out.racel,
-             #                                           dados_out.rdist))
+            dados_out = Dados(x, y, w, z, u)
             
-            #nsent = s.send(b'rrpm')
-            #nsent = s.send(b'rvel')
-            #nsent = s.send(b'rtemp')
-            #nsent = s.send(b'racel')
-            #nsent = s.send(b'rdist')
             nsent = s.send(dados_out)
             #print ("Sent %d bytes" % nsent)
 
             buff = s.recv(sizeof(dados_out))
             print(buff)
+            print ("Mensagem enviada com sucesso!")
+        
+        except:
+            
+            pass
           
         finally:
-            print ("Mensagem enviada com sucesso!")
+            
             time.sleep(5)
 
 if __name__ == "__main__":
