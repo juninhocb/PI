@@ -153,62 +153,44 @@ def excluir_usuario():
    
     id = request.args.get("id")
 
-    req = requests.get('http://localhost:4001/excluir_usuario?id='+id)
-    #Usuario.delete_by_id(id)
-    resp = req.json()
-    if resp['message'] == 'ok':
-        return redirect("/Cliente")
-    else:
-        msg = "Erro: "+resp['details']
-
+    Usuario.delete_by_id(id)
     
-    return render_template('exibir_mensagem.html', mensagem=msg)
+    return Cliente()
 
 @app.route("/Alt_cliente")
 def Alt_cliente():
    
     id = request.args.get("id")
-
-    req = requests.get('http://localhost:4001/Alt_cliente?id='+id)
-    resp = req.json()
-
-    if resp['message'] == 'ok':
-        # converter a resposta para a pessoa
-        u = dict_to_model(Usuario, resp['data'])
-        # encaminhar o fluxo para a página de alteração
-        return render_template("Alt_cliente.html", usuario=u)
-    else:
-        msg = "Erro: "+resp['details']
-        # encaminhar a resposta para uma página de exibição de mensagens
     
-    #usuario_alt = Usuario.get_by_id(id)
-        return render_template('exibir_mensagem.html', mensagem=msg)
+    usuario_alt = Usuario.get_by_id(id)
+           
+    return render_template("Alt_cliente.html", usuario=usuario_alt)
  
 
-@app.route("/alterar_usuario", methods= ['POST'])
+@app.route("/alterar_usuario")
 def alterar_usuario():
-    id = request.form['id']
-    nome= request.form['nome']
-    snome= request.form['snome']
-    sexo= request.form['sexo']
-    email= request.form['email']
-    tel= request.form['telefone']
-    cidade= request.form['cidade']
-    estado= request.form['estado']
-    #usuario = Usuario.get_by_id(id)
-
-    par = {"id":id ,"nome": nome, "snome": snome, "sexo": sexo, "email": email, "telefone": tel, "cidade": cidade, "estado": estado}
+    id = request.args.get("id")
+    nome= request.args.get("nome")
+    snome= request.args.get("snome")
+    sexo= request.args.get("sexo")
+    email= request.args.get("email")
+    tel= request.args.get("telefone")
+    cidade= request.args.get("cidade")
+    estado= request.args.get("estado")
+    usuario = Usuario.get_by_id(id)
     
-    req = requests.post(url='http://localhost:4001/alterar_usuario', json=par)
-    resp = req.json()
-
-    if resp['message'] == 'ok':
-        return redirect("/Cliente")
-    else:
-        msg = "Erro: "+resp['details']
-        # encaminhar a resposta para uma página de exibição de mensagens
-        return render_template('exibir_mensagem.html', mensagem=msg)
+    usuario.nome = nome
+    usuario.sobrenome = snome
+    usuario.sexo = sexo
+    usuario.email = email
+    usuario.telefone = tel
+    usuario.cidade = cidade
+    usuario.estado = estado
     
+
+    usuario.save()
+
+    return redirect("Cliente")
 
 @app.route("/login", methods=['POST'])
 def login():

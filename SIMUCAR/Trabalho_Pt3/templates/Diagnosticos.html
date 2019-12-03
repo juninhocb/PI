@@ -1,0 +1,140 @@
+<!DOCTYPE> 
+  <html> 
+   <head> 
+   <meta charset="UTF-8">
+   <meta http-equiv="refresh" content="30">
+   <title> Clientes </title> 
+   <link rel="stylesheet" type="text/css" href="static/style.css" />
+   
+	<style>
+     		body{
+                         margin: 0;
+			 
+                         	 
+         
+ 			}
+         #menu ul{ 
+              margin: 0; 
+              background-color: "Black";
+              list-style: none; 
+         } 
+         #menu ul li{
+              display: inline;
+   
+         }
+         #menu ul li a{ 
+              padding: 10px 10px;
+              display: inline-block; 
+              color: white; 
+              text-decoration: none; 
+         }
+	 #menu ul li a:hover{
+		color: #004d00; 
+               
+         }
+       
+	</style>
+	
+	<style>
+     		body{
+                       background: url("static/fundo.jpg");
+                       background-repeat: no-repeat;
+                       background-attachment: fixed; 
+  		       background-size: cover;	
+}
+         
+       
+    </style> 
+    
+    <style>
+    borda{
+            background-color: white;
+            text-align:center;
+            border: 10px solid;
+             border-color:red;
+}
+    
+
+    </style>
+	
+	
+
+   <!head> 
+   
+   
+<h1>
+
+<div id="cabecalho" align= "center">
+<font size ="6" color="9C9C9C" style = "font-family:courier,arial,helvetica;" >Car Information</font>
+</div>
+
+</h1>
+
+ 
+<h2>
+<div align= "center">
+<font size ="5" color="FFFFFF" style = "font-family:courier,arial,helvetica;" >Dados de Veíuculo</font>
+</div>
+</h2>
+
+ 
+<body> 
+
+<div align = "center" >
+        <div style= "text-align: center;" >
+                <select >
+                   <option>Selecione o Veículo </option> 
+                   <option> Teste </a><br> </option>
+                           
+               </select>
+                       
+</div>
+
+<table  border="3" bordercolor="yellow"</table>>
+    <tr>
+    <th><font size="2" color="FFFFFF">Tipo do Dado</font> </th>
+    <th><font size="2" color="FFFFFF">Rotações por Minuto (RPM)</font> </th>
+    <th><font size="2" color="FFFFFF">Velocidade (Km/H)</font></th>
+	<th><font size="2" color="FFFFFF">Temperatura (°C)</font></th>
+	<th><font size="2" color="FFFFFF">Posição da Tartaruga (%)</font></th>
+    <th><font size="2" color="FFFFFF">Distância Percorrida Total (KM)</font></th>
+    <th><font size="2" color="FFFFFF">Gasto Do Veículo (R$)</font></th>
+    </tr>
+    {% for dado in dados %}
+    <tr align="center">
+        <td><font color="FFFFFF">Valores Atuais do Veículo</font></td>
+        <td><font color="FFFFFF">{{ dado.rpm }} </font></td>
+        <td><font color="FFFFFF">{{ dado.vel }} </font></td>
+	    <td><font color="FFFFFF">{{dado.temp }}</font></td>
+	    <td><font color="FFFFFF">{{ dado.acel }}</font></td>
+        <td><font color="FFFFFF">{{ dado.dist}}</font></td>
+        <td><font color="FFFFFF">{{ (dado.dist/11)*4 }}</font></td>
+    </tr>
+    {% endfor %}
+    <tr align="center">
+        <td><font color="FFFFFF">Best Drive</font></td>
+        <td><font color="FFFFFF">1900 </font></td>
+        <td><font color="FFFFFF"> 80 </font></td>
+        <td><font color="FFFFFF"> 65 </font></td>
+        <td><font color="FFFFFF">50</font></td>
+        <td><font color="FFFFFF">0</font></td>
+    </tr>
+   
+   
+</table>    
+
+
+
+<a href = "/"> Voltar </a>
+
+
+
+
+	
+</div>
+
+
+
+</body>  
+
+  </html>

@@ -1,0 +1,122 @@
+<!DOCTYPE> 
+  <html> 
+   <head> 
+   <meta charset="UTF-8">
+   <title> Clientes </title> 
+   <link rel="stylesheet" type="text/css" href="static/style.css" />
+   
+	<style>
+     		body{
+                         margin: 0;
+			 
+                         	 
+         
+ 			}
+         #menu ul{ 
+              margin: 0; 
+              background-color: "Black";
+              list-style: none; 
+         } 
+         #menu ul li{
+              display: inline;
+   
+         }
+         #menu ul li a{ 
+              padding: 10px 10px;
+              display: inline-block; 
+              color: white; 
+              text-decoration: none; 
+         }
+	 #menu ul li a:hover{
+		color: #004d00; 
+               
+         }
+       
+	</style>
+	
+	<style>
+     		body{
+                       background: url("static/fundo.jpg");
+                       background-repeat: no-repeat;
+                       background-attachment: fixed; 
+  		       background-size: cover;	
+}
+         
+       
+	</style> 
+	
+	
+
+   <!head> 
+   
+   
+ 
+<h1>
+<div id="cabecalho" align= "center">
+<font size ="6" color="9C9C9C" style = "font-family:courier,arial,helvetica;" >Car Information</font>
+</div>
+</h1>
+
+ 
+<body> 
+<div id="menu"> 
+     <ul> 
+	{% if session['usuario'] %}
+	<li> <a href="/Cad_Cliente">  Cadastrar Cliente     </a> </li>
+	{% else %}
+	<li> <a href="/Login">  Cadastrar Cliente     </a> </li>
+	{% endif %}
+	
+	<li> <a href = "#"> Verificar Pontuação </a> </li>
+	<li> <a href = "/"> Voltar </a> </li>
+     </ul>
+	
+  
+
+  </div>
+
+<div style= "text-align: center;" >
+ <select id="appearance-select">
+	<option>Selecione o Cliente </option> 
+	{% for usuario in lista : %}
+	<option> {{ usuario.nome }}</a><br> </option>
+	{% endfor %}
+
+</select>
+<form action="#table"><button type="submit">Ver Tabela</button></form>
+        
+</div>
+<div>
+
+	<table border="2" cellpadding="10" 
+	style="position:absolute; left: 270px; top: 1500px;" 
+	<tr>
+	<a name="table"><caption>
+	<font color="White" size="5"> Tabela Clientes: </font>
+	</caption></a>
+	<!--<td>
+	<font color="White"> Nome | Sobrenome | Telefone | Email | Cidade </font>
+	</td> -->
+	{% for usuario in lista : %}
+	<td>  <font color="White">
+	{{ usuario.nome }} | {{ usuario.sobrenome }} | {{ usuario.sexo }} | {{ usuario.email }}
+	| {{ usuario.cidade }} | {{ usuario.estado }} | {{ usuario.telefone }}
+	{% if session['usuario'] %}
+	<a href=/Alt_cliente?id={{ usuario.id }}>Alterar</a>
+	<a href=/excluir_usuario?id={{ usuario.id }}>Excluir</a><br>
+	{% else %}
+	<a href=/Login>Alterar</a>
+	<a href=/Login>Excluir</a><br>
+	{% endif %}
+	</td>
+	</font>
+	</tr>
+	{% endfor %}
+	</table>
+</div>
+
+
+
+</body>  
+
+  </html>

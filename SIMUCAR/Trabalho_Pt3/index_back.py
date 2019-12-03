@@ -60,37 +60,32 @@ def incluirV():
 @app.route("/excluir_usuario")
 def excluir_usuario():
    
-    msg = jsonify({"message":"ok"})
-
     id = request.args.get("id")
 
-    #Usuario.delete_by_id(id)
-    
     Usuario.delete_by_id(id)
-
-    return msg
+    
+    return Cliente()
 
 @app.route("/Alt_cliente")
 def Alt_cliente():
-    msg = jsonify({"message":"error","detail":"iniciando procedimentos"})
-    id = request.args.get("id") 
-    usuario_alt = Usuario.get_by_id(id)      
-    msg = jsonify({"message":"ok","detail":"ok","data":model_to_dict(usuario_alt)})
-    return msg
+   
+    id = request.args.get("id")
+    
+    usuario_alt = Usuario.get_by_id(id)
+           
+    return render_template("Alt_cliente.html", usuario=usuario_alt)
+ 
 
-
-@app.route("/alterar_usuario", methods= ["POST"])
+@app.route("/alterar_usuario")
 def alterar_usuario():
-    msg = jsonify({"message":"ok"})
-    dados = request.get_json(force=True)
-    id = dados['id']
-    nome= dados['nome']
-    snome= dados['snome']
-    sexo= dados['sexo']
-    email= dados['email']
-    tel= dados['telefone']
-    cidade= dados['cidade']
-    estado= dados['estado']
+    id = request.args.get("id")
+    nome= request.args.get("nome")
+    snome= request.args.get("snome")
+    sexo= request.args.get("sexo")
+    email= request.args.get("email")
+    tel= request.args.get("telefone")
+    cidade= request.args.get("cidade")
+    estado= request.args.get("estado")
     usuario = Usuario.get_by_id(id)
     
     usuario.nome = nome
@@ -104,7 +99,7 @@ def alterar_usuario():
 
     usuario.save()
 
-    return msg
+    return redirect("Cliente")
 
 @app.route("/login", methods=['POST'])
 def login():

@@ -2,7 +2,7 @@
   <html> 
    <head> 
    <meta charset="UTF-8">
-   <title> Alterar Cliente </title> 
+   <title> Cadastro Cliente </title> 
    <link rel="stylesheet" type="text/css" href="static/style.css" />
    <link rel="stylesheet" type="text/css" href="static/style1.css" />	
 	<style>
@@ -43,7 +43,8 @@
 }
          
        
-	</style> 
+	</style>
+	
 	
 
    <!head> 
@@ -54,19 +55,19 @@
 
 <body>
 
-<h2 align = "center"> <font size="8" color="9C9C9C" style = "font-family:courier,arial,helvetica;"> Alterar de Cliente</font></h2>
+<h2 align = "center"> <font size="8" color="9C9C9C" style = "font-family:courier,arial,helvetica;"> Cadastro de Cliente</font></h2>
 
-<form action="/alterar_usuario" method= "POST" >
+<form method="post"  action="/incluirUsuario">
 <fieldset>
 	
 	<fieldset class="grupo">
 		<div class="campo">
 			<label for="nome">Nome</label>
-			<input type="text" id="nome" name="nome" style="width: 20em" value="{{ usuario.nome}}">
+			<input type="text" id="nome" name="nome" style="width: 20em" value="" required><span class="aviso"></span>
 		</div>
 		<div class="campo">
 			<label for="snome">Sobrenome</label>
-			<input type="text" id="snome" name="snome" style="width: 20em" value="{{ usuario.sobrenome}}">
+			<input type="text" id="snome" name="snome" style="width: 20em" value="">
 		</div>
 	</fieldset>	
 	
@@ -82,18 +83,18 @@
 
 	<div class="campo">
 		<label for="email">E-mail</label>
-		<input type="text" id="email" name="email" style="width: 41em" value="{{ usuario.email}}">
+		<input type="text" id="email" name="email" style="width: 41em" value="">
 	</div>
 
 	<div class="campo">
 		<label for="telefone">Telefone</label>
-		<input type="text" id="telefone" name="telefone" style="width: 20em" value="{{ usuario.telefone}}">
+		<input type="text" id="telefone" name="telefone" style="width: 20em" value="">
 	</div>
 	
 	<fieldset class="grupo">
 		<div class="campo">
 			<label for="cidade">Cidade</label>
-			<input type="text" id="cidade" name="cidade" style="width: 20em" value="{{ usuario.cidade}}">
+			<input type="text" id="cidade" name="cidade" style="width: 20em" value="">
 		</div>
 		<div class="campo">
 			<label for="estado">Estado</label>
@@ -135,8 +136,7 @@
 	</div>
 
 	<form>
-	<input type=submit value=Alterar class="botao submit" name="alterar">
-	<input type=hidden name=id value="{{ usuario.id}}">
+	<input type=submit value=Incluir onClick="alert('CLIENTE CADASTRADO COM SUCESSO'); return true" class="botao submit" name="submit">
    	</form>
 	
 </fieldset>
@@ -148,10 +148,10 @@
 
 <div id="menu" style= "text-align: center;"> 
 <font size="3" color="White" face="Verdana"> 
-     <ul> 
+     
 	
-	<li> <a href = "/Cliente"> Voltar </a><li>
-     </ul>
+	<a href = "/Cliente"> Voltar 
+     
   
     <font/>
   </div>
